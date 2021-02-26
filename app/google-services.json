@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "685736602341",
+    "project_id": "udemy-a52f4",
+    "storage_bucket": "udemy-a52f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685736602341:android:59fdb442c416444841420c",
+        "android_client_info": {
+          "package_name": "com.example.firebase101"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685736602341-tcgs9e540vjmktbtd8k7qg5jbb4qolqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPWTyYmWcfBIsg5sY8wqPbUOJH9vUELac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685736602341-tcgs9e540vjmktbtd8k7qg5jbb4qolqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
