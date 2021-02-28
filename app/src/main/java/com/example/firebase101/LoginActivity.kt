@@ -22,8 +22,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initAuthStateListener()
-
+        //Fragments Buttons
         val txtResendMail =findViewById<TextView>(R.id.txtResendMail)
+        val txtForgetPassword=findViewById<TextView>(R.id.txtForgetPswd)
+        //Activity Buttons
         val txtSignUp = findViewById<TextView>(R.id.txtLoginSignUp)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val email = findViewById<TextView>(R.id.edtLoginMail)
@@ -37,6 +39,11 @@ class LoginActivity : AppCompatActivity() {
 
         txtResendMail.setOnClickListener {
             var showDialog=ResendMailFragment()
+            showDialog.show(supportFragmentManager,"showDialog")
+        }
+
+        txtForgetPassword.setOnClickListener {
+            var showDialog= ForgetPasswordDialogFragment()
             showDialog.show(supportFragmentManager,"showDialog")
         }
 
