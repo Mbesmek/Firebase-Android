@@ -53,6 +53,10 @@ class RegisterActivity : AppCompatActivity() {
                         if (p0.isSuccessful){
                        Toast.makeText(this@RegisterActivity,"Sign Up with Succesfuly",Toast.LENGTH_SHORT).show()
                             sendVerifiedMail()
+
+                            var user=User()
+                            user.name
+
                             FirebaseAuth.getInstance().signOut()
                             var intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                             startActivity(intent)
