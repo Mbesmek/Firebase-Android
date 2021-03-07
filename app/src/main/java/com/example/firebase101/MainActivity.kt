@@ -1,14 +1,18 @@
 package com.example.firebase101
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import java.lang.StringBuilder
 
 
@@ -18,13 +22,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     var db: FirebaseDatabase? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initAuthStateListener()
-//        readData()
-//        read2()
+
         readData()
+        var dashboard=Dashboard()
+        dashboard.readFirestore(7)
     }
 
     private fun initAuthStateListener() {
@@ -120,36 +126,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-/*    private fun readData(){
 
-        var txtS1=findViewById<TextView>(R.id.txtSensor1)
-        var txtS2=findViewById<TextView>(R.id.txtSensor2)
-        var txtS3=findViewById<TextView>(R.id.txtSensor3)
+    private fun readFirestore2(){
+        val db=FirebaseFirestore.getInstance()
 
-        var references= FirebaseDatabase.getInstance().reference
-//        query1
-        var query= references.child("pi")
-                .orderByKey()
-                .equalTo("sensors")
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                for (singleSnapshot in snapshot!!.children){
-                    var readedData=singleSnapshot.getValue(Sensors::class.java)
-                    txtS1.text = readedData?.sensorName
-                    txtS2.text = readedData?.sensorValue
-                    Log.d("Tag",readedData.toString())
-
+        db.collection("sensor")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (document.id.startsWith("2021-03-02"))
+                    Log.d("Oku", "${document.id} => ${document.data}")
                 }
             }
+            .addOnFailureListener { exception ->
+                Log.w("Oku", "Error getting documents.", exception)
+            }
+    }
 
-
-            })
-
-    }*/
 
 }
