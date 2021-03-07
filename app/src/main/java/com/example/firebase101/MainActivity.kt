@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -27,10 +28,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initAuthStateListener()
-
+        var btnOpenDashboard1=findViewById<Button>(R.id.btnSensor1Dash)
         readData()
-        var dashboard=Dashboard()
-        dashboard.readFirestore(7)
+//        val dashboard=Dashboard()
+//        dashboard.readFirestore(7,"day","sensor1")
+        btnOpenDashboard1.setOnClickListener {
+
+                var intent = Intent(this, DashboardActivity::class.java)
+                startActivity(intent)
+
+        }
+
     }
 
     private fun initAuthStateListener() {
