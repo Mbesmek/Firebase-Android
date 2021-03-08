@@ -47,13 +47,10 @@ class Dashboard() {
                     }
 
                 }
-
-
             }
             .addOnFailureListener { exception ->
                 Log.w("Oku", "Error getting documents.", exception)
             }
-
         return valueList
     }
 }
