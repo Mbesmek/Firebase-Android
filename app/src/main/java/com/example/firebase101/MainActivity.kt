@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,12 @@ import java.lang.StringBuilder
 
 
 class MainActivity : AppCompatActivity() {
-
+    private var progr = 0
+    private var progress_bar: ProgressBar? = null
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var database: DatabaseReference
+      var txtS1: TextView? =null
+//    var txtS1: TextView = findViewById<TextView>(R.id.txtTempProgress)
     var db: FirebaseDatabase? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -28,28 +32,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initAuthStateListener()
-        var btnOpenDashboard1=findViewById<Button>(R.id.btnSensor1Dash)
+        progress_bar = findViewById<ProgressBar>(R.id.temperatureBar) as ProgressBar
+        var btnOpenDashboard1 = findViewById<Button>(R.id.btnSensor1Dash)
         readData()
-//        val dashboard=Dashboard()
-//        dashboard.readFirestore(7,"day","sensor1")
+
         btnOpenDashboard1.setOnClickListener {
 
-                var intent = Intent(this, DashboardActivity::class.java)
-                startActivity(intent)
+            var intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
 
         }
 
     }
 
     private fun initAuthStateListener() {
-        authStateListener=object :FirebaseAuth.AuthStateListener{
+        authStateListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
-                var user =p0.currentUser
-                if(user!=null){
+                var user = p0.currentUser
+                if (user != null) {
 
-                }else{
-                    var intent = Intent(this@MainActivity,LoginActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // user can't back to main menu
+                } else {
+                    var intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                     finish()
                 }
@@ -60,14 +64,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.mainmenu,menu)
+        menuInflater.inflate(R.menu.mainmenu, menu)
         return super.onCreateOptionsMenu(menu)
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item?.itemId){
-            R.id.menuLogout->{
+        when (item?.itemId) {
+            R.id.menuLogout -> {
                 logOut()
                 return true
             }
@@ -84,12 +88,13 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         controlUser()
     }
-        // Control the user come by back button
+
+    // Control the user come by back button
     //if user come by back button system remove the user
     private fun controlUser() {
-        var user= FirebaseAuth.getInstance().currentUser
-        if (user==null){
-            var intent = Intent(this@MainActivity,LoginActivity::class.java)
+        var user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            var intent = Intent(this@MainActivity, LoginActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // user can't back to main menu
             startActivity(intent)
             finish()
@@ -99,56 +104,63 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        FirebaseAuth.getInstance().addAuthStateListener (authStateListener)
+        FirebaseAuth.getInstance().addAuthStateListener(authStateListener)
     }
 
     override fun onStop() {
         super.onStop()
-    if (authStateListener!=null){
-        FirebaseAuth.getInstance().removeAuthStateListener (authStateListener)
-    }
+        if (authStateListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(authStateListener)
+        }
     }
 
 
-    private fun readData(){
-        var txtS1=findViewById<TextView>(R.id.txtSensor1)
-        var txtS2=findViewById<TextView>(R.id.txtSensor2)
-        var references= FirebaseDatabase.getInstance().reference
+    private fun readData() {
+
+        var txtS1=findViewById<TextView>(R.id.txtTempProgress)
+        var references = FirebaseDatabase.getInstance().reference
 //        query1
-        var query= references.child("pi")
+        var query = references.child("pi")
                 .orderByKey()
                 .equalTo("sensors")
-        query.addValueEventListener(object :ValueEventListener{
+        query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (singleSnapshot in snapshot!!.children){
-                    var readedData=singleSnapshot.getValue(Sensors::class.java)
+                for (singleSnapshot in snapshot!!.children) {
+                    var readedData = singleSnapshot.getValue(Sensors::class.java)
                     txtS1.text = readedData?.sensorName
-                    txtS2.text = readedData?.sensorValue
-                    Log.d("Tag",readedData.toString())
+//                    txtS2.text = readedData?.sensorValue
+                    updateProgress()
+                    Log.d("Tag", readedData.toString())
 
                 }
             }
         })
     }
 
-    private fun readFirestore2(){
-        val db=FirebaseFirestore.getInstance()
+    private fun updateProgress(){
+        progress_bar
+        progress_bar?.progress = 50
+        txtS1?.text = txtS1?.text
+    }
+
+    private fun readFirestore2() {
+        val db = FirebaseFirestore.getInstance()
 
         db.collection("sensor")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    if (document.id.startsWith("2021-03-02"))
-                    Log.d("Oku", "${document.id} => ${document.data}")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        if (document.id.startsWith("2021-03-02"))
+                            Log.d("Oku", "${document.id} => ${document.data}")
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("Oku", "Error getting documents.", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.w("Oku", "Error getting documents.", exception)
+                }
     }
 
 

@@ -9,7 +9,7 @@ import com.github.mikephil.charting.utils.MPPointF
 
 class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, layoutResource) {
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
-        var tvPrice=findViewById<TextView>(R.id.sensorValue)
+        var sensorV=findViewById<TextView>(R.id.sensorValue)
         val value = entry?.y?.toDouble() ?: 0.0
         var resText = ""
         if(value.toString().length > 8){
@@ -18,7 +18,7 @@ class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, 
         else{
             resText = "Val: " + value.toString()
         }
-        tvPrice.text = resText
+        sensorV.text = resText
         super.refreshContent(entry, highlight)
     }
 
