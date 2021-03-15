@@ -6,43 +6,80 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.type.Date
+import com.google.type.DateTime
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var progr = 0
-    private var progress_bar: ProgressBar? = null
+
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var database: DatabaseReference
-      var txtS1: TextView? =null
-//    var txtS1: TextView = findViewById<TextView>(R.id.txtTempProgress)
+    lateinit var txtS1:TextView
+    lateinit var txtS2:TextView
+    lateinit var txtS3:TextView
+    lateinit var txtS4:TextView
+    lateinit var txtS5:TextView
+    lateinit var txtS6:TextView
+    lateinit var txtDate:TextView
+    lateinit var txtMainTemp:TextView
+
+
     var db: FirebaseDatabase? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        init()
+        listeners()
+
+    /*    val toolbar = findViewById<View>(R.id.toolbar)
+        toolbar.findViewById<View>(R.id.tool_bar_left_icon).setOnClickListener {
+            Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show()
+        }
+        toolbar.findViewById<View>(R.id.toolbarMenu).setOnClickListener {
+            Toast.makeText(this, "Sa", Toast.LENGTH_SHORT).show()
+        }
+*/
         initAuthStateListener()
-        progress_bar = findViewById<ProgressBar>(R.id.temperatureBar) as ProgressBar
-        var btnOpenDashboard1 = findViewById<Button>(R.id.btnSensor1Dash)
+
         readData()
 
-        btnOpenDashboard1.setOnClickListener {
 
-            var intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
+    }
+    private fun init(){
+        txtS1=findViewById(R.id.sensorValue1)
+        txtS2=findViewById(R.id.sensorValue2)
+        txtS3=findViewById(R.id.sensorValue3)
+        txtS4=findViewById(R.id.sensorValue4)
+        txtS5=findViewById(R.id.sensorValue5)
+        txtS6=findViewById(R.id.sensorValue6)
+        txtDate=findViewById(R.id.updated_date)
+        txtMainTemp=findViewById(R.id.mainTemp)
+    }
+
+    private fun listeners(){
+        val llS1=findViewById<LinearLayout>(R.id.llSensor1)
+        llS1.setOnClickListener {
+            startActivity(Intent(this,DashboardActivity::class.java))
 
         }
 
+        txtDate.setOnClickListener {
+
+        }
     }
 
     private fun initAuthStateListener() {
@@ -84,9 +121,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         controlUser()
+        val sdf = SimpleDateFormat("dd/MMMM/yyyy")
+        val currentDate = sdf.format(Date())
+       txtDate.text=currentDate
     }
 
     // Control the user come by back button
@@ -117,10 +158,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun readData() {
 
-        var txtS1=findViewById<TextView>(R.id.txtTempProgress)
-        var references = FirebaseDatabase.getInstance().reference
-//        query1
-        var query = references.child("pi")
+
+        val references = FirebaseDatabase.getInstance().reference
+
+        val query = references.child("pi")
                 .orderByKey()
                 .equalTo("sensors")
         query.addValueEventListener(object : ValueEventListener {
@@ -130,37 +171,22 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot!!.children) {
-                    var readedData = singleSnapshot.getValue(Sensors::class.java)
-                    txtS1.text = readedData?.sensorName
-//                    txtS2.text = readedData?.sensorValue
-                    updateProgress()
+                    val readedData = singleSnapshot.getValue(Sensor::class.java)
+                    txtMainTemp.text=readedData?.Sensor1.toString().plus("°C")
+
+                    txtS1.text=readedData?.Sensor1.toString()
+                    txtS2.text=readedData?.Sensor2.toString()
+                    txtS3.text=readedData?.Sensor3.toString()
+                    txtS4.text=readedData?.Sensor4.toString()
+                    txtS5.text=readedData?.Sensor5.toString()
+                    txtS6.text=readedData?.Sensor6.toString()
+
+
                     Log.d("Tag", readedData.toString())
 
                 }
             }
         })
-    }
-
-    private fun updateProgress(){
-        progress_bar
-        progress_bar?.progress = 50
-        txtS1?.text = txtS1?.text
-    }
-
-    private fun readFirestore2() {
-        val db = FirebaseFirestore.getInstance()
-
-        db.collection("sensor")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        if (document.id.startsWith("2021-03-02"))
-                            Log.d("Oku", "${document.id} => ${document.data}")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("Oku", "Error getting documents.", exception)
-                }
     }
 
 

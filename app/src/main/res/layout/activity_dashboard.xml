@@ -8,6 +8,12 @@
     android:orientation="vertical"
     android:weightSum="10"
     >
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"

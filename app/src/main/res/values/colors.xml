@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="red">#FF0000</color>
+    <color name="colorPrimary">#0E2433</color>
+    <color name="colorAccent">#333333</color>
+    <color name="colorBackground">#EBEBEB</color>
+    <color name="colorTrendingStart">#00B09B</color>
+    <color name="colorTrendingEnd">#86c93D</color>
+    <color name="colorDivider">#D6D6D6</color>
 </resources>

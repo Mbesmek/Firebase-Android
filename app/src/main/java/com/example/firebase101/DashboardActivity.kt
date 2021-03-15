@@ -39,10 +39,10 @@ class DashboardActivity : AppCompatActivity() {
             readFirestore(1, TimeRange.DAY, "sensor1")
         }
         btnWekk.setOnClickListener {
-            readFirestore(1, TimeRange.WEEK, "sensor1")
+            readFirestore(7, TimeRange.WEEK, "sensor1")
         }
         btnWekk.setOnClickListener {
-            readFirestore(1, TimeRange.MONTH, "sensor1")
+            readFirestore(30, TimeRange.MONTH, "sensor1")
         }
 
     }
