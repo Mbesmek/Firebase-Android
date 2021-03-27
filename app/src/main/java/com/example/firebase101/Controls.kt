@@ -1,5 +1,5 @@
 package com.example.firebase101
-
+/*
 class Controls {
     lateinit var electric1: String
     lateinit var electric2: String
@@ -21,3 +21,4 @@ class Controls {
         this.lamp3 = lamp3
     }
 }
+ */

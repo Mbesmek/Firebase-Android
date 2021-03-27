@@ -15,35 +15,31 @@ class ForgetPasswordDialogFragment : DialogFragment() {
 
     lateinit var emailEditText: EditText
 
-    lateinit var mcontext: FragmentActivity
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_forget_password_dialog, container, false)
-        val btnCancel=view.findViewById<Button>(R.id.btnCancelForgetPsw)
-        val  btnSend=view.findViewById<Button>(R.id.btnSendForgetPsw)
+        val btnCancel = view.findViewById<Button>(R.id.btnCancelForgetPsw)
+        val btnSend = view.findViewById<Button>(R.id.btnSendForgetPsw)
 
-        emailEditText=view.findViewById(R.id.edtForgetPasswordMail)
-        mcontext=requireActivity()
+        emailEditText = view.findViewById(R.id.edtForgetPasswordMail)
 
         btnCancel.setOnClickListener {
             dismiss()
         }
         btnSend.setOnClickListener {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(emailEditText.text.toString())
+            FirebaseAuth.getInstance().sendPasswordResetEmail(emailEditText.text.toString())
                     .addOnCompleteListener { task ->
-                        if (task.isSuccessful){
-                            Toast.makeText(mcontext,"Password Reset Mail was Sent",Toast.LENGTH_SHORT).show()
+                        if (task.isSuccessful) {
+                            Toast.makeText(requireContext(), "Password Reset Mail was Sent", Toast.LENGTH_SHORT).show()
                             dismiss()
-                        }else{
-                            Toast.makeText(mcontext,"Check email! "+" "+task.exception,Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "Check email! " + " " + task.exception, Toast.LENGTH_SHORT).show()
                             dismiss()
                         }
                     }
         }
         return view
     }
-
-
 }
