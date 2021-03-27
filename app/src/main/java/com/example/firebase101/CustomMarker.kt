@@ -16,7 +16,7 @@ class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, 
             resText = "Val: " + value.toString().substring(0,7)
         }
         else{
-            resText = "Val: " + value.toString()
+            resText = "Val: $value"
         }
         sensorV.text = resText
         super.refreshContent(entry, highlight)

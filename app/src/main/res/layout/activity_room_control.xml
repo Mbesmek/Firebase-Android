@@ -21,68 +21,22 @@
             android:orientation="vertical">
 
 
-
             <TextView
                 android:id="@+id/updated_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="27dp"
+                android:text="Control Panel"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/overviewContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Instant Temperature"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/mainTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-thin"
-
-                android:textSize="70dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-<!--                <TextView-->
-<!--                    android:id="@+id/temp_min"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Min Temp: 05:05 AM" />-->
-
-<!--                <Space-->
-<!--                    android:layout_width="50dp"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/temp_max"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Max Temp: 05:05 PM" />-->
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/detailsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <LinearLayout
@@ -99,14 +53,14 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp"
-                    android:id="@+id/llSensor1">
+                    android:id="@+id/llLampControl1">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/line_chart"
-                        app:tint="#FFFFFF"
-                        android:visibility="visible"/>
+                        android:src="@drawable/led_lamp"
+                        app:tint="@color/black"
+                        android:visibility="visible" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -115,12 +69,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Temp"
+                        android:text="Room1"
                         android:textSize="12dp"
-                        android:id="@+id/sensorHeader1"/>
+                        android:id="@+id/LampControlHeader1"/>
 
                     <TextView
-                        android:id="@+id/sensorValue1"
+                        android:id="@+id/txtLampControl1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dp"
@@ -139,13 +93,14 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp"
-                    android:id="@+id/llSensor2">
+                    android:id="@+id/llLampControl2">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/line_chart"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/led_lamp"
+                        app:tint="@color/black"
+                        android:visibility="visible" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -154,12 +109,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Humidity"
+                        android:text="Room2"
                         android:textSize="12dp"
-                        android:id="@+id/sensorHeader2"/>
+                        android:id="@+id/lampControlHeader2"/>
 
                     <TextView
-                        android:id="@+id/sensorValue2"
+                        android:id="@+id/txtLampControl2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dp" />
@@ -177,13 +132,13 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp"
-                    android:id="@+id/llSensor3">
+                    android:id="@+id/llLampControl3">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/line_chart"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/led_lamp"
+                        app:tint="@color/black" />
 
 
                     <Space
@@ -193,12 +148,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pressure"
+                        android:text="Room3"
                         android:textSize="12dp"
-                        android:id="@+id/sensorHeader3"/>
+                        android:id="@+id/lampControlHeader3"/>
 
                     <TextView
-                        android:id="@+id/sensorValue3"
+                        android:id="@+id/txtLampControl3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14dp" />
@@ -223,13 +178,14 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp"
-                    android:id="@+id/llLampControl">
+                    android:id="@+id/llElectricControl1">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/led_lamp"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/electric_plug"
+                        app:tint="@color/black"
+                        android:visibility="visible" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -238,35 +194,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lamp Control"
+                        android:text="Room1"
                         android:textSize="12dp"
-                        android:id="@+id/sensorHeader4"/>
+                        android:id="@+id/electricControlHeader1"/>
 
                     <TextView
-                        android:id="@+id/lampControl"
+                        android:id="@+id/txtElectronicControl1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:textSize="14dp" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/curved_background"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-
-
-
-
+                        android:textSize="14dp"
+                        />
                 </LinearLayout>
 
                 <Space
@@ -280,13 +217,14 @@
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:id="@+id/llElectricControl2">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/user"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/electric_plug"
+                        app:tint="@color/black" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -295,20 +233,61 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="User"
+                        android:text="Room2"
                         android:textSize="12dp"
-                        android:id="@+id/sensorHeader6"/>
+                        android:id="@+id/electricControlHeader2"/>
 
                     <TextView
-                        android:id="@+id/sensorValue6"
+                        android:id="@+id/txtElectronicControl2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="User Info"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/curved_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:id="@+id/llElectricControl3">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/electric_plug"
+                        app:tint="@color/black" />
+
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Room3"
+                        android:textSize="12dp"
+                        android:id="@+id/electricControlHeader3"/>
+
+                    <TextView
+                        android:id="@+id/txtElectronicControl3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
+
+
 
     <ProgressBar
         android:id="@+id/loader"

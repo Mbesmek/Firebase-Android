@@ -1,10 +1,12 @@
 package com.example.firebase101
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
@@ -23,69 +25,85 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+        val sensorName = intent.getStringExtra("sensorName")
         listeners()
 
-        readFirestore(1, TimeRange.DAY, "sensor1")
+        if (sensorName != null) {
+            readFirestore(1, TimeRange.DAY, sensorName)
+        }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun listeners() {
-        val btnDay=findViewById<Button>(R.id.btnDay)
-        val btnWekk=findViewById<Button>(R.id.btnWeek)
-        val btnMonth=findViewById<Button>(R.id.btnMonth)
+        val btnDay = findViewById<Button>(R.id.btnDay)
+        val btnWek = findViewById<Button>(R.id.btnWeek)
+        val btnMonth = findViewById<Button>(R.id.btnMonth)
+        val sensorName = intent.getStringExtra("sensorName")
+        val btnBack = findViewById<ImageView>(R.id.tool_bar_left_icon)
 
         btnDay.setOnClickListener {
-            readFirestore(1, TimeRange.DAY, "sensor1")
+            if (sensorName != null) {
+                readFirestore(1, TimeRange.DAY, sensorName)
+            }
         }
-        btnWekk.setOnClickListener {
-            readFirestore(7, TimeRange.WEEK, "sensor1")
+        btnWek.setOnClickListener {
+            if (sensorName != null) {
+                readFirestore(7, TimeRange.WEEK, sensorName)
+            }
         }
-        btnWekk.setOnClickListener {
-            readFirestore(30, TimeRange.MONTH, "sensor1")
+        btnMonth.setOnClickListener {
+            if (sensorName != null) {
+                readFirestore(30, TimeRange.MONTH, sensorName)
+            }
         }
+
+        btnBack.setOnClickListener{
+            startActivity(Intent(this@DashboardActivity, MainActivity::class.java))
+        }
+
 
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setLine() {
+    private fun setLine(descriptionText: String) {
         val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(R.id.lineChart)
         lineChart.clear()
 
-        val vl = LineDataSet(entries, "My Type")
+        val vl = LineDataSet(entries, "Sensor Value")
 
-//Part4
+
         vl.setDrawValues(false)
         vl.setDrawFilled(true)
         vl.lineWidth = 3f
         vl.fillColor = Utility.getColor(this, R.color.gray)
         vl.fillAlpha = Utility.getColor(this, R.color.red)
 
-//Part5
+
         lineChart.fitScreen()
 //        lineChart.zoomOut()
         lineChart.xAxis.labelRotationAngle = 0f
 
-//Part6
+
         lineChart.data = LineData(vl)
 
-//Part7
+
         lineChart.axisRight.isEnabled = false
 //        lineChart.xAxis.axisMaximum = 0.1f
 
-//Part8
+
         lineChart.setTouchEnabled(true)
         lineChart.setPinchZoom(true)
 
-//Part9
-        lineChart.description.text = "Days"
-        lineChart.setNoDataText("No forex yet!")
 
-//Part10
+        lineChart.description.text = descriptionText
+        lineChart.setNoDataText("No Sensor Value yet!")
+
+
         lineChart.animateX(500, Easing.EaseInExpo)
 
-//Part11
+
         val markerView = CustomMarker(this@DashboardActivity, R.layout.marker_view)
         lineChart.marker = markerView
 
@@ -96,7 +114,7 @@ class DashboardActivity : AppCompatActivity() {
     fun readFirestore(minusDay: Long, type: TimeRange, sensorName: String) {
         entries = ArrayList<Entry>()
         val db = FirebaseFirestore.getInstance()
-
+        var descriptionText = "DAYS"
         val currentDate = LocalDateTime.now().minusDays(minusDay)
 
 
@@ -115,16 +133,19 @@ class DashboardActivity : AppCompatActivity() {
                         if (date.isAfter(currentDate)) {
                             when (type) {
 
-                                TimeRange.WEEK-> if (str != null) {
-                                    entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
-                                    System.out.println("Week:" + date.dayOfMonth.toFloat() + ";" + str.toFloat())
-                                }
                                 TimeRange.DAY -> if (str != null) {
                                     entries.add(Entry(date.hour.toFloat(), str.toFloat()))
+                                    descriptionText = "DAY"
                                     System.out.println("Day:" + date.hour.toFloat() + ";" + str.toFloat())
                                 }
-                                TimeRange.MONTH ->if (str != null) {
-                                    entries.add(Entry(date.monthValue.toFloat(), str.toFloat()))
+                                TimeRange.WEEK -> if (str != null) {
+                                    entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
+                                    descriptionText = "WEEK"
+                                    System.out.println("Week:" + date.dayOfMonth.toFloat() + ";" + str.toFloat())
+                                }
+                                TimeRange.MONTH -> if (str != null) {
+                                    entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
+                                    descriptionText = "MONTHS"
                                     System.out.println("Month:" + date.hour.toFloat() + ";" + str.toFloat())
                                 }
                             }
@@ -132,7 +153,7 @@ class DashboardActivity : AppCompatActivity() {
                         }
 
                     }
-                    setLine()
+                    setLine(descriptionText)
 
                 }
 
