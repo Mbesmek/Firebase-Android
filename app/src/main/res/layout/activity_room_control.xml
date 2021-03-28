@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activitycolor_background"
+    android:background="@drawable/bck5"
     android:orientation="vertical"
     android:padding="25dp">
 
@@ -13,23 +13,30 @@
         android:layout_height="match_parent"
         android:visibility="visible">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/addressContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/tool_bar_left_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"
+                app:tint="@color/white" />
 
 
             <TextView
                 android:id="@+id/updated_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Control Panel"
                 android:textColor="@color/white"
-                android:textSize="27dp"
-                android:text="Control Panel"/>
-        </LinearLayout>
-
+                android:textSize="27dp" />
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -46,39 +53,38 @@
                 android:weightSum="3">
 
                 <LinearLayout
+                    android:id="@+id/llLampControl1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llLampControl1">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/led_lamp"
-                        app:tint="@color/black"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        app:tint="@color/black" />
 
                     <Space
                         android:layout_width="wrap_content"
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/LampControlHeader1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room1"
-                        android:textSize="12dp"
-                        android:id="@+id/LampControlHeader1"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtLampControl1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <Space
@@ -86,32 +92,32 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:id="@+id/llLampControl2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llLampControl2">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/led_lamp"
-                        app:tint="@color/black"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        app:tint="@color/black" />
 
                     <Space
                         android:layout_width="wrap_content"
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/lampControlHeader2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room2"
-                        android:textSize="12dp"
-                        android:id="@+id/lampControlHeader2"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtLampControl2"
@@ -125,14 +131,14 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:id="@+id/llLampControl3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llLampControl3">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -146,11 +152,11 @@
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/lampControlHeader3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room3"
-                        android:textSize="12dp"
-                        android:id="@+id/lampControlHeader3"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtLampControl3"
@@ -171,39 +177,38 @@
                 android:weightSum="3">
 
                 <LinearLayout
+                    android:id="@+id/llElectricControl1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llElectricControl1">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/electric_plug"
-                        app:tint="@color/black"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        app:tint="@color/black" />
 
                     <Space
                         android:layout_width="wrap_content"
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/electricControlHeader1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room1"
-                        android:textSize="12dp"
-                        android:id="@+id/electricControlHeader1"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtElectronicControl1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <Space
@@ -211,14 +216,14 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:id="@+id/llElectricControl2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llElectricControl2">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -231,11 +236,11 @@
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/electricControlHeader2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room2"
-                        android:textSize="12dp"
-                        android:id="@+id/electricControlHeader2"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtElectronicControl2"
@@ -249,14 +254,14 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:id="@+id/llElectricControl3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curved_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    android:id="@+id/llElectricControl3">
+                    android:padding="8dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -270,11 +275,11 @@
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/electricControlHeader3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Room3"
-                        android:textSize="12dp"
-                        android:id="@+id/electricControlHeader3"/>
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/txtElectronicControl3"
@@ -285,8 +290,6 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
-
 
 
     <ProgressBar

@@ -1,12 +1,16 @@
 package com.example.firebase101.controls
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.firebase101.R
+import com.example.firebase101.main.MainActivity
+import com.example.firebase101.userAuth.LoginActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +31,7 @@ class RoomControlActivity : AppCompatActivity() {
     lateinit var txtElectric1: TextView
     lateinit var txtElectric2: TextView
     lateinit var txtElectric3: TextView
+
 
     lateinit var layouts: ArrayList<LinearLayout>
     lateinit var controlValue: ArrayList<String>
@@ -133,6 +138,12 @@ class RoomControlActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun listeners() {
         val database = FirebaseDatabase.getInstance().reference
+
+        val imgBackButton = findViewById<ImageView>(R.id.tool_bar_left_icon)
+
+        imgBackButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         llLamp1.setOnClickListener {
             if (controlValue[0] == "On") {
