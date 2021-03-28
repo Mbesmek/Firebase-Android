@@ -3,14 +3,15 @@ package com.example.firebase101
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
@@ -29,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var txtS6: TextView
     lateinit var txtDate: TextView
-    lateinit var txtMainTemp: TextView
-
 
     var db: FirebaseDatabase? = null
 
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         txtS4 = findViewById(R.id.lampControl)
         txtS6 = findViewById(R.id.sensorValue6)
         txtDate = findViewById(R.id.updated_date)
-        txtMainTemp = findViewById(R.id.mainTemp)
+        //txtMainTemp = findViewById(R.id.mainTemp)
     }
 
     private fun listeners() {
@@ -71,21 +70,21 @@ class MainActivity : AppCompatActivity() {
         val llS1 = findViewById<LinearLayout>(R.id.llSensor1)
 
         llS1.setOnClickListener {
-            val intent=Intent(this, DashboardActivity::class.java)
-            intent.putExtra("sensorName","sensor1")
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra("sensorName", "sensor1")
             startActivity(intent)
         }
         val llS2 = findViewById<LinearLayout>(R.id.llSensor2)
         llS2.setOnClickListener {
-            val intent=Intent(this, DashboardActivity::class.java)
-            intent.putExtra("sensorName","sensor2")
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra("sensorName", "sensor2")
             startActivity(intent)
         }
 
         val llS3 = findViewById<LinearLayout>(R.id.llSensor3)
         llS3.setOnClickListener {
-            val intent=Intent(this, DashboardActivity::class.java)
-            intent.putExtra("sensorName","sensor3")
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra("sensorName", "sensor3")
             startActivity(intent)
         }
         txtDate.setOnClickListener {
@@ -176,8 +175,8 @@ class MainActivity : AppCompatActivity() {
     private fun readData() {
         val references = FirebaseDatabase.getInstance().reference
         val query = references.child("pi")
-                .orderByKey()
-                .equalTo("sensors")
+            .orderByKey()
+            .equalTo("sensors")
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -186,21 +185,36 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot!!.children) {
                     val readedData = singleSnapshot.getValue(Sensor::class.java)
-                    txtMainTemp.text = readedData?.Sensor1.toString().plus("°C")
+                    //txtMainTemp.text = readedData?.Sensor1.toString().plus("°C")
 
                     txtS1.text = readedData?.Sensor1.toString()
                     txtS2.text = readedData?.Sensor2.toString()
                     txtS3.text = readedData?.Sensor3.toString()
-                    Log.d("Tag", readedData.toString())
 
+                    val valueList = ArrayList<SensorItem>()
+                    valueList.add(SensorItem("Instant Temprature", readedData?.Sensor1.toString()))
+                    valueList.add(SensorItem("Instant Humudity", readedData?.Sensor2.toString()))
+                    valueList.add(SensorItem("Instant Pressure", readedData?.Sensor3.toString()))
+                    initViewPager(valueList)
+
+                    Log.d("Tag", readedData.toString())
                 }
             }
         })
     }
 
-    private fun minMaxTemp(min:String,max:String){
+    private fun minMaxTemp(min: String, max: String) {
 
     }
 
+    private fun initViewPager(valueList: ArrayList<SensorItem>) {
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
+        viewPager.adapter = SensorValueAdapter(valueList)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            //selected tab
+        }.attach()
+
+    }
 }

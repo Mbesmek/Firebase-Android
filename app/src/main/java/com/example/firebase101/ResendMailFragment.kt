@@ -13,23 +13,13 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ResendMailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ResendMailFragment : DialogFragment() {
-
     lateinit var emailEditText: EditText
     lateinit var passwordEditText: EditText
-    lateinit var mcontext:FragmentActivity
 
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -45,71 +35,59 @@ class ResendMailFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =inflater.inflate(R.layout.fragment_resend_mail, container, false)
-        emailEditText=view.findViewById(R.id.edtDialogMail)
-        passwordEditText=view.findViewById(R.id.edtDialogPassword)
-        mcontext= requireActivity()
-        val  btnCancel=view.findViewById<Button>(R.id.btnDialogCancel)
-        val btnSend=view.findViewById<Button>(R.id.btnDialogSend)
+        val view = inflater.inflate(R.layout.fragment_resend_mail, container, false)
+        emailEditText = view.findViewById(R.id.edtDialogMail)
+        passwordEditText = view.findViewById(R.id.edtDialogPassword)
+        val btnCancel = view.findViewById<Button>(R.id.btnDialogCancel)
+        val btnSend = view.findViewById<Button>(R.id.btnDialogSend)
 
         btnCancel.setOnClickListener { dismiss() }
 
         btnSend.setOnClickListener {
-            if (emailEditText.text.toString().isNotEmpty() && passwordEditText.text.toString().isNotEmpty()){
-
-                    sendResendMail(emailEditText.text.toString(),passwordEditText.text.toString())
-
-            }else{
+            if (emailEditText.text.toString().isNotEmpty() && passwordEditText.text.toString()
+                    .isNotEmpty()
+            ) {
+                sendResendMail(emailEditText.text.toString(), passwordEditText.text.toString())
+            } else {
 //            Toast.makeText(activity,"Mail send",Toast.LENGTH_SHORT).show()
-                Toast.makeText(mcontext,"fill whole fields",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "fill whole fields", Toast.LENGTH_SHORT).show()
 
             }
         }
-
-
-
         return view
     }
 
-    private fun sendResendMail(email: String, password :String){
-        var credential=EmailAuthProvider.getCredential(email,password)
+    private fun sendResendMail(email: String, password: String) {
+        val credential = EmailAuthProvider.getCredential(email, password)
         FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful){
-                        reSendVerifiedMail()
-                        dismiss()
-                    }else{
-                        Toast.makeText(mcontext,"fill whole fields",Toast.LENGTH_SHORT).show()
-                    }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    reSendVerifiedMail()
+                    dismiss()
+                } else {
+                    Toast.makeText(requireContext(), "fill whole fields", Toast.LENGTH_SHORT).show()
                 }
-        }
+            }
+    }
 
-    private fun reSendVerifiedMail (){
-        var user=FirebaseAuth.getInstance().currentUser
-        if (user!=null){
-            user.sendEmailVerification()
+    private fun reSendVerifiedMail() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.sendEmailVerification()?.addOnCompleteListener { p0 ->
+            if (p0.isSuccessful) {
 
-                    .addOnCompleteListener { p0 ->
-                        if (p0.isSuccessful){
+                Toast.makeText(requireContext(), "Verified mail sent : ", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Error occured, While sending verified mail  " + p0.exception?.message,
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                            Toast.makeText(mcontext,"Verified mail sent : ",Toast.LENGTH_SHORT).show()
-                        } else{
-                            Toast.makeText(mcontext,"Error occured, While sending verified mail  "+p0.exception?.message,Toast.LENGTH_SHORT).show()
-
-                        }
-                    }
+            }
         }
     }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResendMailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ResendMailFragment().apply {

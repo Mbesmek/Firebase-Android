@@ -22,55 +22,60 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initAuthStateListener()
-        //Fragments Buttons
-        val txtResendMail =findViewById<TextView>(R.id.txtResendMail)
-        val txtForgetPassword=findViewById<TextView>(R.id.txtForgetPswd)
-        //Activity Buttons
+
+        //val txtResendMail = findViewById<TextView>(R.id.txtResendMail)
+        val txtForgetPassword = findViewById<TextView>(R.id.txtForgetPswd)
         val txtSignUp = findViewById<TextView>(R.id.txtLoginSignUp)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val email = findViewById<TextView>(R.id.edtLoginMail)
         val password = findViewById<TextView>(R.id.edtLoginPswd)
 
-
         txtSignUp.setOnClickListener {
-            var intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
+/*
         txtResendMail.setOnClickListener {
-            var showDialog=ResendMailFragment()
-            showDialog.show(supportFragmentManager,"showDialog")
+            val showDialog = ResendMailFragment()
+            showDialog.show(supportFragmentManager, "showDialog")
         }
+*/
 
         txtForgetPassword.setOnClickListener {
-            var showDialog= ForgetPasswordDialogFragment()
-            showDialog.show(supportFragmentManager,"showDialog")
+            val showDialog = ForgetPasswordDialogFragment()
+            showDialog.show(supportFragmentManager, "showDialog")
         }
 
         btnLogin.setOnClickListener {
 
             if (email.text.isNotEmpty() && password.text.isNotEmpty()) {
                 progressBarVisible(true)
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(email.text.toString(), password.text.toString())
-                        .addOnCompleteListener(object : OnCompleteListener<AuthResult> {
-                            override fun onComplete(p0: Task<AuthResult>) {
+                FirebaseAuth.getInstance()
+                    .signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+                    .addOnCompleteListener(object : OnCompleteListener<AuthResult> {
+                        override fun onComplete(p0: Task<AuthResult>) {
 
-                                if (p0.isSuccessful) {
-                                    progressBarVisible(false)
+                            if (p0.isSuccessful) {
+                                progressBarVisible(false)
 //                                        if(!p0.result?.user!!.isEmailVerified)
 //                                            FirebaseAuth.getInstance().signOut()
 //                                    Toast.makeText(this@LoginActivity, "Login Succesful " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
 
-                                } else {
-                                    Toast.makeText(this@LoginActivity, "Error occurred, While user logging  " + p0.exception?.message, Toast.LENGTH_SHORT).show()
-                                    progressBarVisible(false)
-                                }
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Error occurred, While user logging  " + p0.exception?.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                progressBarVisible(false)
                             }
+                        }
 
-                        })
+                    })
 //                        .addOnCompleteListener { p0->{ p0.isSuccessful} } lambda
             } else {
-                Toast.makeText(this@LoginActivity, "Please fill empty fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Please fill empty fields", Toast.LENGTH_SHORT)
+                    .show()
 
             }
             progressBarVisible(false)
@@ -100,7 +105,11 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()// if user login, can't back
                     } else {
-                        Toast.makeText(this@LoginActivity, "Please Verified Your Mail Address", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Please Verified Your Mail Address",
+                            Toast.LENGTH_SHORT
+                        ).show()
 //                        FirebaseAuth.getInstance().signOut()
                     }
                 }
