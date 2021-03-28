@@ -1,7 +1,8 @@
-package com.example.firebase101
+package com.example.firebase101.dashboard
 
 import android.content.Context
 import android.widget.TextView
+import com.example.firebase101.R
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight

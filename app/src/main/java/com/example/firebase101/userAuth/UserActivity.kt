@@ -1,9 +1,10 @@
-package com.example.firebase101
+package com.example.firebase101.userAuth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.firebase101.R
 import com.google.firebase.auth.FirebaseAuth
 
 class UserActivity : AppCompatActivity() {

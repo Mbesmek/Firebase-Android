@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.main
 
 import android.content.Intent
 import android.os.Build
@@ -10,6 +10,11 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.example.firebase101.R
+import com.example.firebase101.controls.RoomControlActivity
+import com.example.firebase101.dashboard.DashboardActivity
+import com.example.firebase101.userAuth.LoginActivity
+import com.example.firebase101.userAuth.UserActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
@@ -197,9 +202,24 @@ class MainActivity : AppCompatActivity() {
                     txtS3.text = readedData?.Sensor3.toString()
 
                     val valueList = ArrayList<SensorItem>()
-                    valueList.add(SensorItem("Instant Temprature", readedData?.Sensor1.toString()))
-                    valueList.add(SensorItem("Instant Humudity", readedData?.Sensor2.toString()))
-                    valueList.add(SensorItem("Instant Pressure", readedData?.Sensor3.toString()))
+                    valueList.add(
+                        SensorItem(
+                            "Instant Temprature",
+                            readedData?.Sensor1.toString()
+                        )
+                    )
+                    valueList.add(
+                        SensorItem(
+                            "Instant Humudity",
+                            readedData?.Sensor2.toString()
+                        )
+                    )
+                    valueList.add(
+                        SensorItem(
+                            "Instant Pressure",
+                            readedData?.Sensor3.toString()
+                        )
+                    )
                     initViewPager(valueList)
 
                     Log.d("Tag", readedData.toString())
@@ -216,7 +236,8 @@ class MainActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
-        viewPager.adapter = SensorValueAdapter(valueList)
+        viewPager.adapter =
+            SensorValueAdapter(valueList)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             //selected tab
         }.attach()

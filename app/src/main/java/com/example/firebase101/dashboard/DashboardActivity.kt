@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.dashboard
 
 import android.content.Intent
 import android.os.Build
@@ -8,8 +8,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import com.example.firebase101.*
+import com.example.firebase101.main.MainActivity
+import com.example.firebase101.main.TimeRange
+import com.example.firebase101.utils.Utility
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -44,17 +47,20 @@ class DashboardActivity : AppCompatActivity() {
 
         btnDay.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(1, TimeRange.DAY, sensorName)
+                readFirestore(1,
+                    TimeRange.DAY, sensorName)
             }
         }
         btnWek.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(7, TimeRange.WEEK, sensorName)
+                readFirestore(7,
+                    TimeRange.WEEK, sensorName)
             }
         }
         btnMonth.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(30, TimeRange.MONTH, sensorName)
+                readFirestore(30,
+                    TimeRange.MONTH, sensorName)
             }
         }
 
@@ -68,7 +74,9 @@ class DashboardActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setLine(descriptionText: String) {
-        val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(R.id.lineChart)
+        val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(
+            R.id.lineChart
+        )
         lineChart.clear()
 
         val vl = LineDataSet(entries, "Sensor Value")
@@ -77,8 +85,14 @@ class DashboardActivity : AppCompatActivity() {
         vl.setDrawValues(false)
         vl.setDrawFilled(true)
         vl.lineWidth = 3f
-        vl.fillColor = Utility.getColor(this, R.color.gray)
-        vl.fillAlpha = Utility.getColor(this, R.color.red)
+        vl.fillColor = Utility.getColor(
+            this,
+            R.color.gray
+        )
+        vl.fillAlpha = Utility.getColor(
+            this,
+            R.color.red
+        )
 
 
         lineChart.fitScreen()
@@ -104,7 +118,10 @@ class DashboardActivity : AppCompatActivity() {
         lineChart.animateX(500, Easing.EaseInExpo)
 
 
-        val markerView = CustomMarker(this@DashboardActivity, R.layout.marker_view)
+        val markerView = CustomMarker(
+            this@DashboardActivity,
+            R.layout.marker_view
+        )
         lineChart.marker = markerView
 
     }

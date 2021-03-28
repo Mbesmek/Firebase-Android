@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.userAuth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.firebase101.R
+import com.example.firebase101.main.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -54,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
                        Toast.makeText(this@RegisterActivity,"Sign Up with Succesfuly",Toast.LENGTH_SHORT).show()
                             sendVerifiedMail()
 
-                            var user=User()
+                            var user= User()
                             user.name
 
                             FirebaseAuth.getInstance().signOut()

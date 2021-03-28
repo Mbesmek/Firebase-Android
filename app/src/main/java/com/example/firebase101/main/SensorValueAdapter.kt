@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.firebase101.R
 
 /**
  * Created by mgx1905 on 3/28/21.

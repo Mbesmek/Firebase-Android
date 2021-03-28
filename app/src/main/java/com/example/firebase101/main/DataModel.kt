@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.main
 
 enum class TimeRange {
     DAY, WEEK, MONTH

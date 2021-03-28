@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.userAuth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import com.example.firebase101.R
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgetPasswordDialogFragment : DialogFragment() {

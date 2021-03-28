@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.controls
 
 class Controls {
     lateinit var electric1: String

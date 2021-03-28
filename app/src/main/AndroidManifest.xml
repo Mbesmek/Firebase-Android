@@ -14,18 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Firebase101">
-        <activity android:name=".UserActivity"></activity>
-        <activity android:name=".RoomControlActivity" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".userAuth.UserActivity"></activity>
+        <activity android:name=".controls.RoomControlActivity" />
+        <activity android:name=".dashboard.DashboardActivity" />
+        <activity android:name=".userAuth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".userAuth.RegisterActivity" />
+        <activity android:name=".main.MainActivity" />
     </application>
 
 </manifest>

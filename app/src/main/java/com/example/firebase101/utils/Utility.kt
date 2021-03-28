@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.utils
 
 import android.content.Context
 import androidx.annotation.ColorRes

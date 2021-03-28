@@ -1,4 +1,4 @@
-package com.example.firebase101
+package com.example.firebase101.userAuth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,8 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
+import com.example.firebase101.main.MainActivity
+import com.example.firebase101.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -42,7 +43,8 @@ class LoginActivity : AppCompatActivity() {
 */
 
         txtForgetPassword.setOnClickListener {
-            val showDialog = ForgetPasswordDialogFragment()
+            val showDialog =
+                ForgetPasswordDialogFragment()
             showDialog.show(supportFragmentManager, "showDialog")
         }
 
