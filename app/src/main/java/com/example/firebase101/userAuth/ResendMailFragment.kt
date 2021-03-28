@@ -34,6 +34,7 @@ class ResendMailFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_resend_mail, container, false)
         emailEditText = view.findViewById(R.id.edtDialogMail)
         passwordEditText = view.findViewById(R.id.edtDialogPassword)
@@ -48,9 +49,8 @@ class ResendMailFragment : DialogFragment() {
             ) {
                 sendResendMail(emailEditText.text.toString(), passwordEditText.text.toString())
             } else {
-//            Toast.makeText(activity,"Mail send",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity,"Mail send",Toast.LENGTH_SHORT).show()
                 Toast.makeText(requireContext(), "fill whole fields", Toast.LENGTH_SHORT).show()
-
             }
         }
         return view

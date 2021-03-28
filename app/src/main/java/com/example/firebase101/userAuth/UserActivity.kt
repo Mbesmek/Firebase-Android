@@ -9,21 +9,15 @@ import com.google.firebase.auth.FirebaseAuth
 
 class UserActivity : AppCompatActivity() {
 
-    lateinit var btnLogout:Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
-        init()
+
         listener()
     }
 
-private fun init(){
-
-    btnLogout=findViewById(R.id.btnLogout)
-}
-
-    private fun listener(){
+    private fun listener() {
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
         btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, LoginActivity::class.java))

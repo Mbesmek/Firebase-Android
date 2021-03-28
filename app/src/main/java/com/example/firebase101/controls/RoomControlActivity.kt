@@ -130,11 +130,9 @@ class RoomControlActivity : AppCompatActivity() {
 
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun listeners() {
         val database = FirebaseDatabase.getInstance().reference
-
 
         llLamp1.setOnClickListener {
             if (controlValue[0] == "On") {
@@ -150,7 +148,8 @@ class RoomControlActivity : AppCompatActivity() {
                     )
                 )
                 txtLamp1.text = "Off"
-                llLamp1.background = ContextCompat.getDrawable(this,
+                llLamp1.background = ContextCompat.getDrawable(
+                    this,
                     R.drawable.curved_background
                 )
             } else {
@@ -167,7 +166,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtLamp1.text = "On"
                 llLamp1.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -186,7 +186,8 @@ class RoomControlActivity : AppCompatActivity() {
                     )
                 )
                 txtLamp2.text = "Off"
-                llLamp2.background = ContextCompat.getDrawable(this,
+                llLamp2.background = ContextCompat.getDrawable(
+                    this,
                     R.drawable.curved_background
                 )
             } else {
@@ -203,7 +204,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtLamp2.text = "On"
                 llLamp2.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -222,7 +224,8 @@ class RoomControlActivity : AppCompatActivity() {
                     )
                 )
                 txtLamp3.text = "Off"
-                llLamp3.background = ContextCompat.getDrawable(this,
+                llLamp3.background = ContextCompat.getDrawable(
+                    this,
                     R.drawable.curved_background
                 )
             } else {
@@ -239,7 +242,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtLamp3.text = "On"
                 llLamp3.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -260,7 +264,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric1.text = "Off"
                 llElectric1.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background
                     )
             } else {
@@ -277,7 +282,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric1.text = "On"
                 llElectric1.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -297,7 +303,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric2.text = "Off"
                 llElectric2.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background
                     )
             } else {
@@ -314,7 +321,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric2.text = "On"
                 llElectric2.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -334,7 +342,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric3.text = "Off"
                 llElectric3.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background
                     )
             } else {
@@ -351,7 +360,8 @@ class RoomControlActivity : AppCompatActivity() {
                 )
                 txtElectric3.text = "On"
                 llElectric3.background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }
@@ -364,7 +374,8 @@ class RoomControlActivity : AppCompatActivity() {
         for (i in 0 until array.size) {
             if (array[i] == "On") {
                 layouts[i].background =
-                    ContextCompat.getDrawable(this,
+                    ContextCompat.getDrawable(
+                        this,
                         R.drawable.curved_background_clicked
                     )
             }

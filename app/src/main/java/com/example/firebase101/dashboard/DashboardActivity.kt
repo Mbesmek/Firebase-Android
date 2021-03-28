@@ -21,10 +21,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 
+@RequiresApi(Build.VERSION_CODES.O)
 class DashboardActivity : AppCompatActivity() {
     lateinit var entries: ArrayList<Entry>
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -37,7 +37,6 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun listeners() {
         val btnDay = findViewById<Button>(R.id.btnDay)
         val btnWek = findViewById<Button>(R.id.btnWeek)
@@ -47,32 +46,34 @@ class DashboardActivity : AppCompatActivity() {
 
         btnDay.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(1,
-                    TimeRange.DAY, sensorName)
+                readFirestore(
+                    1,
+                    TimeRange.DAY, sensorName
+                )
             }
         }
         btnWek.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(7,
-                    TimeRange.WEEK, sensorName)
+                readFirestore(
+                    7,
+                    TimeRange.WEEK, sensorName
+                )
             }
         }
         btnMonth.setOnClickListener {
             if (sensorName != null) {
-                readFirestore(30,
-                    TimeRange.MONTH, sensorName)
+                readFirestore(
+                    30,
+                    TimeRange.MONTH, sensorName
+                )
             }
         }
 
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, MainActivity::class.java))
         }
-
-
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setLine(descriptionText: String) {
         val lineChart = findViewById<com.github.mikephil.charting.charts.LineChart>(
             R.id.lineChart
@@ -126,58 +127,50 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     fun readFirestore(minusDay: Long, type: TimeRange, sensorName: String) {
         entries = ArrayList<Entry>()
         val db = FirebaseFirestore.getInstance()
         var descriptionText = "DAYS"
         val currentDate = LocalDateTime.now().minusDays(minusDay)
 
-
-
         db.collection("sensor")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
 
-                        val date = LocalDateTime.parse(
-                                document.id,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                        )
-                        val day = date.dayOfMonth.toFloat()
-                        val str = document.getDouble(sensorName)?.toFloat()
-                        if (date.isAfter(currentDate)) {
-                            when (type) {
+                    val date = LocalDateTime.parse(
+                        document.id,
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    )
+                    val day = date.dayOfMonth.toFloat()
+                    val str = document.getDouble(sensorName)?.toFloat()
+                    if (date.isAfter(currentDate)) {
+                        when (type) {
 
-                                TimeRange.DAY -> if (str != null) {
-                                    entries.add(Entry(date.hour.toFloat(), str.toFloat()))
-                                    descriptionText = "DAY"
-                                    System.out.println("Day:" + date.hour.toFloat() + ";" + str.toFloat())
-                                }
-                                TimeRange.WEEK -> if (str != null) {
-                                    entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
-                                    descriptionText = "WEEK"
-                                    System.out.println("Week:" + date.dayOfMonth.toFloat() + ";" + str.toFloat())
-                                }
-                                TimeRange.MONTH -> if (str != null) {
-                                    entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
-                                    descriptionText = "MONTHS"
-                                    System.out.println("Month:" + date.hour.toFloat() + ";" + str.toFloat())
-                                }
+                            TimeRange.DAY -> if (str != null) {
+                                entries.add(Entry(date.hour.toFloat(), str.toFloat()))
+                                descriptionText = "DAY"
+                                System.out.println("Day:" + date.hour.toFloat() + ";" + str.toFloat())
                             }
-
+                            TimeRange.WEEK -> if (str != null) {
+                                entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
+                                descriptionText = "WEEK"
+                                System.out.println("Week:" + date.dayOfMonth.toFloat() + ";" + str.toFloat())
+                            }
+                            TimeRange.MONTH -> if (str != null) {
+                                entries.add(Entry(date.dayOfMonth.toFloat(), str.toFloat()))
+                                descriptionText = "MONTHS"
+                                System.out.println("Month:" + date.hour.toFloat() + ";" + str.toFloat())
+                            }
                         }
 
                     }
-                    setLine(descriptionText)
 
                 }
-
-                .addOnFailureListener { exception ->
-                    Log.w("Oku", "Error getting documents.", exception)
-                }
-
-
+                setLine(descriptionText)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Oku", "Error getting documents.", exception)
+            }
     }
 }

@@ -23,22 +23,21 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
 
-    lateinit var authStateListener: FirebaseAuth.AuthStateListener
-    private lateinit var database: DatabaseReference
     lateinit var txtS1: TextView
     lateinit var txtS2: TextView
     lateinit var txtS3: TextView
     lateinit var txtS4: TextView
-
     lateinit var txtS6: TextView
     lateinit var txtDate: TextView
 
+    lateinit var database: DatabaseReference
+    lateinit var authStateListener: FirebaseAuth.AuthStateListener
+
     var db: FirebaseDatabase? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,10 +53,7 @@ class MainActivity : AppCompatActivity() {
             }
     */
         initAuthStateListener()
-
         readData()
-
-
     }
 
     private fun init() {
@@ -71,14 +67,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun listeners() {
-
         val llS1 = findViewById<LinearLayout>(R.id.llSensor1)
-
         llS1.setOnClickListener {
             val intent = Intent(this, DashboardActivity::class.java)
             intent.putExtra("sensorName", "sensor1")
             startActivity(intent)
         }
+
         val llS2 = findViewById<LinearLayout>(R.id.llSensor2)
         llS2.setOnClickListener {
             val intent = Intent(this, DashboardActivity::class.java)
@@ -92,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("sensorName", "sensor3")
             startActivity(intent)
         }
+
         txtDate.setOnClickListener {
 
         }
@@ -99,24 +95,23 @@ class MainActivity : AppCompatActivity() {
         val llS4 = findViewById<LinearLayout>(R.id.llLampControl)
         llS4.setOnClickListener {
             startActivity(Intent(this, RoomControlActivity::class.java))
-
         }
+
         val llS5 = findViewById<LinearLayout>(R.id.llUser)
         llS5.setOnClickListener {
-        startActivity(Intent(this, UserActivity::class.java))
-
+            startActivity(Intent(this, UserActivity::class.java))
         }
     }
 
     private fun initAuthStateListener() {
         authStateListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
-                var user = p0.currentUser
+                val user = p0.currentUser
                 if (user != null) {
-
+                    //do it
                 } else {
-                    var intent = Intent(this@MainActivity, LoginActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish()
                 }
@@ -147,7 +142,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         controlUser()
@@ -159,14 +153,14 @@ class MainActivity : AppCompatActivity() {
     // Control the user come by back button
     //if user come by back button system remove the user
     private fun controlUser() {
-        var user = FirebaseAuth.getInstance().currentUser
+        val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            var intent = Intent(this@MainActivity, LoginActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // user can't back to main menu
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // user can't back to main menu
             startActivity(intent)
             finish()
         }
-
     }
 
     override fun onStart() {
@@ -175,10 +169,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        super.onStop()
         if (authStateListener != null) {
             FirebaseAuth.getInstance().removeAuthStateListener(authStateListener)
         }
+        super.onStop()
     }
 
 
@@ -220,27 +214,21 @@ class MainActivity : AppCompatActivity() {
                             readedData?.Sensor3.toString()
                         )
                     )
-                    initViewPager(valueList)
 
+                    initViewPager(valueList)
                     Log.d("Tag", readedData.toString())
                 }
             }
         })
     }
 
-    private fun minMaxTemp(min: String, max: String) {
-
-    }
-
     private fun initViewPager(valueList: ArrayList<SensorItem>) {
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
-        viewPager.adapter =
-            SensorValueAdapter(valueList)
+        viewPager.adapter = SensorValueAdapter(valueList)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             //selected tab
         }.attach()
-
     }
 }
