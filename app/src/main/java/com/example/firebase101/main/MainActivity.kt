@@ -3,6 +3,7 @@ package com.example.firebase101.main
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     var db: FirebaseDatabase? = null
+    var currentPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,7 +230,21 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.adapter = SensorValueAdapter(valueList)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            //selected tab
+
         }.attach()
+
+        val update = Runnable {
+            if (currentPosition == valueList.size) {
+                currentPosition = 0
+            }
+            viewPager.setCurrentItem(currentPosition++, true)
+        }
+
+        val handler = Handler()
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                handler.post(update)
+            }
+        }, 0, 3500)
     }
 }
