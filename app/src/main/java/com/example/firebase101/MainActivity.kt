@@ -96,6 +96,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RoomControlActivity::class.java))
 
         }
+        val llS5 = findViewById<LinearLayout>(R.id.llUser)
+        llS5.setOnClickListener {
+        startActivity(Intent(this, UserActivity::class.java))
+
+        }
     }
 
     private fun initAuthStateListener() {

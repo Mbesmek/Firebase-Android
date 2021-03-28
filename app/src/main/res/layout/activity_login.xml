@@ -11,7 +11,8 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/ic_baseline_local_car_wash_24" />
+        app:srcCompat="@drawable/login"
+        android:background="@color/white"/>
 
     <EditText
         android:id="@+id/edtLoginMail"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activitycolor_background"
+    android:background="@drawable/bck2"
     android:orientation="vertical"
     android:padding="25dp">
 
@@ -248,6 +248,7 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:id="@+id/llUser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
