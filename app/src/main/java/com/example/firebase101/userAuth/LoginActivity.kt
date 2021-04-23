@@ -45,12 +45,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-        /*
-        txtResendMail.setOnClickListener {
-            val showDialog = ResendMailFragment()
-            showDialog.show(supportFragmentManager, "showDialog")
-        }
-        */
 
         txtForgetPassword.setOnClickListener {
             val showDialog =
@@ -66,9 +60,6 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener { p0 ->
                         if (p0.isSuccessful) {
                             progressBarVisible(false)
-                            //if(!p0.result?.user!!.isEmailVerified)
-                            //FirebaseAuth.getInstance().signOut()
-                            //Toast.makeText(this@LoginActivity, "Login Succesful " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(
                                 this@LoginActivity,
@@ -78,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                             progressBarVisible(false)
                         }
                     }
-                //.addOnCompleteListener { p0->{ p0.isSuccessful} } lambda
             } else {
                 Toast.makeText(this@LoginActivity, "Please fill empty fields", Toast.LENGTH_SHORT)
                     .show()

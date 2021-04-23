@@ -7,11 +7,14 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.example.firebase101.R
+import com.example.firebase101.Security.Security
 import com.example.firebase101.controls.RoomControlActivity
 import com.example.firebase101.dashboard.DashboardActivity
 import com.example.firebase101.userAuth.LoginActivity
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var txtS4: TextView
     lateinit var txtS6: TextView
     lateinit var txtDate: TextView
+    lateinit var progressBar: ProgressBar
 
     lateinit var database: DatabaseReference
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -43,17 +47,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         init()
+        progressBar.visibility = View.VISIBLE
         listeners()
 
-        /*    val toolbar = findViewById<View>(R.id.toolbar)
-            toolbar.findViewById<View>(R.id.tool_bar_left_icon).setOnClickListener {
-                Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show()
-            }
-            toolbar.findViewById<View>(R.id.toolbarMenu).setOnClickListener {
-                Toast.makeText(this, "Sa", Toast.LENGTH_SHORT).show()
-            }
-    */
+
         initAuthStateListener()
         readData()
     }
@@ -65,7 +64,8 @@ class MainActivity : AppCompatActivity() {
         txtS4 = findViewById(R.id.lampControl)
         txtS6 = findViewById(R.id.sensorValue6)
         txtDate = findViewById(R.id.updated_date)
-        //txtMainTemp = findViewById(R.id.mainTemp)
+        progressBar = findViewById(R.id.prgMain)
+
     }
 
     private fun listeners() {
@@ -179,7 +179,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun readData() {
+
         val references = FirebaseDatabase.getInstance().reference
+        val privateRsaKey=Security.generateRsaPrivateKey()
         val query = references.child("pi")
             .orderByKey()
             .equalTo("sensors")
@@ -187,33 +189,39 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot!!.children) {
-                    val readedData = singleSnapshot.getValue(Sensor::class.java)
+                    val readedData = singleSnapshot.getValue(Sensor1::class.java)
                     //txtMainTemp.text = readedData?.Sensor1.toString().plus("°C")
+                    if (progressBar.isVisible) {
+                        progressBar.visibility = View.INVISIBLE
+                    }
 
-                    txtS1.text = readedData?.Sensor1.toString()
-                    txtS2.text = readedData?.Sensor2.toString()
-                    txtS3.text = readedData?.Sensor3.toString()
+                    val value1=Security.decryptRsa(readedData?.Sensor1.toString(),privateRsaKey)
+                    val value2=Security.decryptRsa(readedData?.Sensor2.toString(),privateRsaKey)
+                    val value3=Security.decryptRsa(readedData?.Sensor3.toString(),privateRsaKey)
+
+                    txtS1.text =value1.plus("°C")
+                    txtS2.text = value2
+                    txtS3.text = value3
 
                     val valueList = ArrayList<SensorItem>()
                     valueList.add(
                         SensorItem(
                             "Instant Temprature",
-                            readedData?.Sensor1.toString()
+                            value1
                         )
                     )
                     valueList.add(
                         SensorItem(
                             "Instant Humudity",
-                            readedData?.Sensor2.toString()
+                            value2
                         )
                     )
                     valueList.add(
                         SensorItem(
                             "Instant Pressure",
-                            readedData?.Sensor3.toString()
+                            value3
                         )
                     )
 
@@ -222,6 +230,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
     }
 
     private fun initViewPager(valueList: ArrayList<SensorItem>) {
@@ -247,4 +256,6 @@ class MainActivity : AppCompatActivity() {
             }
         }, 0, 3500)
     }
+
+
 }

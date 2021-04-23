@@ -81,8 +81,6 @@ class DashboardActivity : AppCompatActivity() {
         lineChart.clear()
 
         val vl = LineDataSet(entries, "Sensor Value")
-
-
         vl.setDrawValues(false)
         vl.setDrawFilled(true)
         vl.lineWidth = 3f
@@ -94,20 +92,10 @@ class DashboardActivity : AppCompatActivity() {
             this,
             R.color.red
         )
-
-
         lineChart.fitScreen()
-//        lineChart.zoomOut()
         lineChart.xAxis.labelRotationAngle = 0f
-
-
         lineChart.data = LineData(vl)
-
-
         lineChart.axisRight.isEnabled = false
-//        lineChart.xAxis.axisMaximum = 0.1f
-
-
         lineChart.setTouchEnabled(true)
         lineChart.setPinchZoom(true)
 

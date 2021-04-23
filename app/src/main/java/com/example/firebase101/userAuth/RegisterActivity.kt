@@ -48,29 +48,24 @@ class RegisterActivity : AppCompatActivity() {
         progressBarVisible(true)
         auth = Firebase.auth
         auth.createUserWithEmailAndPassword(mail, password)
-            .addOnCompleteListener { p0 ->
-                if (p0.isSuccessful) {
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Sign Up with Succesfuly",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    sendVerifiedMail()
+                .addOnCompleteListener { p0 ->
+                    if (p0.isSuccessful) {
+                        Toast.makeText(this@RegisterActivity,"Sign Up with Succesfuly",Toast.LENGTH_SHORT)
+                        .show()
+                        sendVerifiedMail()
 
-                    val user = User()
-                    user.name
+                        val user = User()
+                        user.name
 
-                    FirebaseAuth.getInstance().signOut()
-                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Error occured, While signing up user " + p0.exception?.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        FirebaseAuth.getInstance().signOut()
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@RegisterActivity,"Error occured, While signing up user " + p0.exception?.message,
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
         progressBarVisible(false)
     }
 
@@ -79,15 +74,15 @@ class RegisterActivity : AppCompatActivity() {
         user?.sendEmailVerification()?.addOnCompleteListener { p0 ->
             if (p0.isSuccessful) {
                 Toast.makeText(
-                    this@RegisterActivity,
-                    "Please Verified Your Account with Your Mail : ",
-                    Toast.LENGTH_SHORT
+                        this@RegisterActivity,
+                        "Please Verified Your Account with Your Mail : ",
+                        Toast.LENGTH_SHORT
                 ).show()
             } else {
                 Toast.makeText(
-                    this@RegisterActivity,
-                    "Error occured, While sending verified mail  " + p0.exception?.message,
-                    Toast.LENGTH_SHORT
+                        this@RegisterActivity,
+                        "Error occured, While sending verified mail  " + p0.exception?.message,
+                        Toast.LENGTH_SHORT
                 ).show()
             }
         }

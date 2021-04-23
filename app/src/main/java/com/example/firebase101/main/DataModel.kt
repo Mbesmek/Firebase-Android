@@ -1,13 +1,17 @@
 package com.example.firebase101.main
 
+import java.lang.reflect.Constructor
+
 enum class TimeRange {
     DAY, WEEK, MONTH
 }
 
 data class Sensor(
-    var Sensor1: Long? = null,
-    var Sensor2: Long? = null,
-    var Sensor3: Long? = null
+
+    var Sensor1: String? ,
+    var Sensor2: String? ,
+    var Sensor3: String?
+
 )
 
 data class User(

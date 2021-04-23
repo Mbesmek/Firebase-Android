@@ -87,7 +87,7 @@ class RoomControlActivity : AppCompatActivity() {
             .equalTo("controls")
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
