@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.example.firebase101.R
-import com.example.firebase101.Security.Security
+import com.example.firebase101.Security.AESEnc
+import com.example.firebase101.Security.RSAEnc
 import com.example.firebase101.controls.RoomControlActivity
 import com.example.firebase101.dashboard.DashboardActivity
 import com.example.firebase101.userAuth.LoginActivity
@@ -181,7 +182,7 @@ class MainActivity : AppCompatActivity() {
     private fun readData() {
 
         val references = FirebaseDatabase.getInstance().reference
-        val privateRsaKey=Security.generateRsaPrivateKey()
+        val privateRsaKey= RSAEnc.generateRsaPrivateKey()
         val query = references.child("pi")
             .orderByKey()
             .equalTo("sensors")
@@ -197,9 +198,9 @@ class MainActivity : AppCompatActivity() {
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    val value1=Security.decryptRsa(readedData?.Sensor1.toString(),privateRsaKey)
-                    val value2=Security.decryptRsa(readedData?.Sensor2.toString(),privateRsaKey)
-                    val value3=Security.decryptRsa(readedData?.Sensor3.toString(),privateRsaKey)
+                    val value1= RSAEnc.decryptRsa(readedData?.Sensor1.toString(),privateRsaKey)
+                    val value2=RSAEnc.decryptRsa(readedData?.Sensor2.toString(),privateRsaKey)
+                    val value3=RSAEnc.decryptRsa(readedData?.Sensor3.toString(),privateRsaKey)
 
                     txtS1.text =value1.plus("°C")
                     txtS2.text = value2

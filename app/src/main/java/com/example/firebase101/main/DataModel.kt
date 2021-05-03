@@ -6,7 +6,7 @@ enum class TimeRange {
     DAY, WEEK, MONTH
 }
 
-data class Sensor(
+class Sensor(
 
     var Sensor1: String? ,
     var Sensor2: String? ,
