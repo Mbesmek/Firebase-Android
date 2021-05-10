@@ -13,9 +13,9 @@ This repository has  created for remote home control by mobile application. In t
 
 
 
-
+<p align="center">
 ![Arch](images/Arch.png)
-
+</p>
 
 
 
