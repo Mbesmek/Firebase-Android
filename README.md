@@ -26,8 +26,10 @@ The data read on Raspberry Pi is send to Firebase Real Time Database and Firesto
 #### Hardware of System
 
 
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/Hardware.png">
+</p>
 
-  ![Hardware](images/Hardware.png)
 
 
 
@@ -70,9 +72,9 @@ Library for BMP180: [GitHub - adafruit/Adafruit_Python_BMP: Python library for a
 ##### Encryption and  Decryption Data by Python
 
 
-
-![security](images/security.png)
-
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/security.png">
+</p>
 
 
 - ###### **AES** (Advanced Encryption Standard)
