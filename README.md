@@ -14,7 +14,7 @@ This repository has  created for remote home control by mobile application. In t
 
 
 <p align="center">
-  <img width="600" height="200" src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/Hardware.png">
+  < src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/Arch.png">
 </p>
 
 
