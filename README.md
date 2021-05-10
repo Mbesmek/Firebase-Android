@@ -163,9 +163,9 @@ private fun registerNewUser(mail: String, password: String) {
 ```
 
 
-
-![singup](images/singup.png)
-
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/singup.png">
+</p>
 
 
 ###### Login
@@ -196,9 +196,9 @@ private fun registerNewUser(mail: String, password: String) {
 ```
 
 
-
-![](images/login.png)
-
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/login.png">
+</p>
 
 
 ###### Main 
@@ -255,8 +255,9 @@ User can see instant data easily in the main page.
 
 
 
-![](images/main.png)
-
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/main.png">
+</p>
 
 
 ###### Dashboard
@@ -318,8 +319,11 @@ User can view daily, weekly and monthly data on table.
 ```
 
 
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/dashboard.png">
+</p>
 
-![](images/dashboard.png)
+
 
 ###### Control
 
@@ -369,15 +373,18 @@ User can control electricity and lamp.
         }
 ```
 
-![](images/control.png)
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/control.png">
+</p>
 
 
 
 ##### Encryption and  Decryption Data by Kotlin
 
 
-
-![](\images\kotlinSecurity.png)
+<p align="center">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/kotlinSecurity.png">
+</p>
 
 
 
