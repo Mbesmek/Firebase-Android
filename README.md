@@ -28,7 +28,7 @@ The data read on Raspberry Pi is send to Firebase Real Time Database and Firesto
 
 
 
-![Hardware](\images\Hardware.png)
+           ![Hardware](images/Hardware.png)
 
 
 
