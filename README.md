@@ -72,7 +72,7 @@ Library for BMP180: [GitHub - adafruit/Adafruit_Python_BMP: Python library for a
 
 
 
-![security](\images\security.png)
+![security](images/security.png)
 
 
 
@@ -163,7 +163,7 @@ private fun registerNewUser(mail: String, password: String) {
 
 
 
-![singup](\images\singup.png)
+![singup](images/singup.png)
 
 
 
@@ -196,7 +196,7 @@ private fun registerNewUser(mail: String, password: String) {
 
 
 
-![](\images\login.png)
+![](images/login.png)
 
 
 
@@ -254,7 +254,7 @@ User can see instant data easily in the main page.
 
 
 
-![](\images\main.png)
+![](images/main.png)
 
 
 
@@ -318,7 +318,7 @@ User can view daily, weekly and monthly data on table.
 
 
 
-![](\images\dashboard.png)
+![](images/dashboard.png)
 
 ###### Control
 
@@ -368,7 +368,7 @@ User can control electricity and lamp.
         }
 ```
 
-![](\images\control.png)
+![](images/control.png)
 
 
 
