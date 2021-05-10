@@ -13,16 +13,17 @@ import javax.crypto.Cipher
 object RSAEnc {
 
 
-    fun encryptRsa(data: String, publicKey: Key?): String {
+    fun encryptRsa(data: String): String {
+        val publicKey = generateRsaPublicKey()
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
         val bytes = cipher.doFinal(data.toByteArray())
 
-        return  Base64.getEncoder().encodeToString(bytes)
+        return Base64.getEncoder().encodeToString(bytes)
     }
 
-    fun decryptRsa(data: String, privateKey: Key?): String {
-
+    fun decryptRsa(data: String): String {
+        val privateKey = generateRsaPrivateKey()
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
         cipher.init(Cipher.DECRYPT_MODE, privateKey)
         val encryptedData = Base64.getDecoder().decode(data);//data.toByteArray()

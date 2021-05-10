@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.firebase101.R
 import com.example.firebase101.Security.AESEnc
 import com.example.firebase101.Security.RSAEnc
+import com.example.firebase101.Security.SecurityData
 import com.example.firebase101.controls.RoomControlActivity
 import com.example.firebase101.dashboard.DashboardActivity
 import com.example.firebase101.userAuth.LoginActivity
@@ -160,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         if (user == null) {
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // user can't back to main menu
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // user can't back to main menu
             startActivity(intent)
             finish()
         }
@@ -182,14 +183,15 @@ class MainActivity : AppCompatActivity() {
     private fun readData() {
 
         val references = FirebaseDatabase.getInstance().reference
-        val privateRsaKey= RSAEnc.generateRsaPrivateKey()
+        val privateRsaKey = RSAEnc.generateRsaPrivateKey()
         val query = references.child("pi")
-            .orderByKey()
-            .equalTo("sensors")
+                .orderByKey()
+                .equalTo("sensors")
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot!!.children) {
                     val readedData = singleSnapshot.getValue(Sensor1::class.java)
@@ -198,32 +200,32 @@ class MainActivity : AppCompatActivity() {
                         progressBar.visibility = View.INVISIBLE
                     }
 
-                    val value1= RSAEnc.decryptRsa(readedData?.Sensor1.toString(),privateRsaKey)
-                    val value2=RSAEnc.decryptRsa(readedData?.Sensor2.toString(),privateRsaKey)
-                    val value3=RSAEnc.decryptRsa(readedData?.Sensor3.toString(),privateRsaKey)
+                    val value1 = SecurityData.decryptData(readedData?.Sensor1.toString())
+                    val value2 = SecurityData.decryptData(readedData?.Sensor2.toString())
+                    val value3 = SecurityData.decryptData(readedData?.Sensor3.toString())
 
-                    txtS1.text =value1.plus("°C")
+                    txtS1.text = value1.plus("°C")
                     txtS2.text = value2
                     txtS3.text = value3
 
                     val valueList = ArrayList<SensorItem>()
                     valueList.add(
-                        SensorItem(
-                            "Instant Temprature",
-                            value1
-                        )
+                            SensorItem(
+                                    "Instant Temprature",
+                                    value1
+                            )
                     )
                     valueList.add(
-                        SensorItem(
-                            "Instant Humudity",
-                            value2
-                        )
+                            SensorItem(
+                                    "Instant Humudity",
+                                    value2
+                            )
                     )
                     valueList.add(
-                        SensorItem(
-                            "Instant Pressure",
-                            value3
-                        )
+                            SensorItem(
+                                    "Instant Pressure",
+                                    value3
+                            )
                     )
 
                     initViewPager(valueList)
