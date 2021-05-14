@@ -73,7 +73,7 @@ Library for BMP180: [GitHub - adafruit/Adafruit_Python_BMP: Python library for a
 
 
 <p align="center">
-  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/security.png">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/securityPython.png">
 </p>
 
 
@@ -383,7 +383,7 @@ User can control electricity and lamp.
 
 
 <p align="center">
-  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/kotlinSecurity.png">
+  <img  src="https://github.com/Mbesmek/Firebase-Android/blob/main/images/securityKotlin.png">
 </p>
 
 
