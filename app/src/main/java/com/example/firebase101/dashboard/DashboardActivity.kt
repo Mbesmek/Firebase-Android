@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import com.example.firebase101.*
+import com.example.firebase101.Security.SecurityData
 import com.example.firebase101.main.MainActivity
 import com.example.firebase101.main.TimeRange
 import com.example.firebase101.utils.Utility
@@ -131,7 +132,8 @@ class DashboardActivity : AppCompatActivity() {
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     )
                     val day = date.dayOfMonth.toFloat()
-                    val str = document.getDouble(sensorName)?.toFloat()
+
+                    val str =  SecurityData.decryptData((document.getString(sensorName)))
                     if (date.isAfter(currentDate)) {
                         when (type) {
 

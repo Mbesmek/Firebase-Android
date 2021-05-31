@@ -12,7 +12,6 @@ import javax.crypto.Cipher
 @RequiresApi(Build.VERSION_CODES.O)
 object RSAEnc {
 
-
     fun encryptRsa(data: String): String {
         val publicKey = generateRsaPublicKey()
         val cipher: Cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")

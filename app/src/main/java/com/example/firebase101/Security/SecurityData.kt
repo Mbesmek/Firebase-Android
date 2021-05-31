@@ -2,6 +2,7 @@ package com.example.firebase101.Security
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+
 @RequiresApi(Build.VERSION_CODES.O)
 object SecurityData{
 fun encryptData(data: String): String {
@@ -11,9 +12,21 @@ fun encryptData(data: String): String {
     return encryptedData + encryptedKey
 }
 
+fun encControl(data:ArrayList<String>):ArrayList<String>{
+    val encryptedData= ArrayList<String>()
+    val key = generateString(32)
+    val encryptedKey = RSAEnc.encryptRsa(key)
+    for (i in 0..5) {
+         encryptedData.add(AESEnc.encrypt(data[i], key)+encryptedKey)
+    }
 
-fun decryptData(data: String): String {
-    val encData = data.substring(0, 24)
+
+    return encryptedData
+
+}
+
+fun decryptData(data: String?): String {
+    val encData = data!!.substring(0, 24)
     val encKey = data.substring(24, data.length)
     println(encData.length)
     println(encKey.length)

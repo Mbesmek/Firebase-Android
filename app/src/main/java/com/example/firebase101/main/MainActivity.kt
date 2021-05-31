@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.example.firebase101.R
-import com.example.firebase101.Security.AESEnc
 import com.example.firebase101.Security.RSAEnc
 import com.example.firebase101.Security.SecurityData
 import com.example.firebase101.controls.RoomControlActivity
@@ -184,9 +183,9 @@ class MainActivity : AppCompatActivity() {
 
         val references = FirebaseDatabase.getInstance().reference
         val privateRsaKey = RSAEnc.generateRsaPrivateKey()
-        val query = references.child("pi")
+        val query = references.child("sensors")
                 .orderByKey()
-                .equalTo("sensors")
+                .equalTo("values")
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -195,11 +194,9 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot!!.children) {
                     val readedData = singleSnapshot.getValue(Sensor1::class.java)
-                    //txtMainTemp.text = readedData?.Sensor1.toString().plus("°C")
                     if (progressBar.isVisible) {
                         progressBar.visibility = View.INVISIBLE
                     }
-
                     val value1 = SecurityData.decryptData(readedData?.Sensor1.toString())
                     val value2 = SecurityData.decryptData(readedData?.Sensor2.toString())
                     val value3 = SecurityData.decryptData(readedData?.Sensor3.toString())

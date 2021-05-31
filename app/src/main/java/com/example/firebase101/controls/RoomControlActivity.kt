@@ -2,21 +2,23 @@ package com.example.firebase101.controls
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.firebase101.R
+import com.example.firebase101.Security.SecurityData
 import com.example.firebase101.main.MainActivity
-import com.example.firebase101.userAuth.LoginActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.ArrayList
-
+@RequiresApi(Build.VERSION_CODES.O)
 class RoomControlActivity : AppCompatActivity() {
 
     lateinit var llLamp1: LinearLayout
@@ -35,6 +37,7 @@ class RoomControlActivity : AppCompatActivity() {
 
     lateinit var layouts: ArrayList<LinearLayout>
     lateinit var controlValue: ArrayList<String>
+    lateinit var controlValueEnc: ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +85,7 @@ class RoomControlActivity : AppCompatActivity() {
     private fun readData() {
 
         val references = FirebaseDatabase.getInstance().reference
-        val query = references.child("pi")
+        val query = references.child("mobile")
             .orderByKey()
             .equalTo("controls")
         query.addValueEventListener(object : ValueEventListener {
@@ -90,43 +93,47 @@ class RoomControlActivity : AppCompatActivity() {
 
             }
 
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 controlValue = ArrayList<String>()
 
                 for (singleSnapshot in snapshot.children) {
                     val readedData = singleSnapshot.getValue(Controls::class.java)
+//                    SecurityData.decryptData(readedData?.Sensor1.toString())
 
-                    txtLamp1.text = readedData?.lamp1.toString()
+                    val lamp1= SecurityData.decryptData(readedData?.lamp1.toString())
+                    val lamp2= SecurityData.decryptData(readedData?.lamp2.toString())
+                    val lamp3= SecurityData.decryptData(readedData?.lamp3.toString())
+                    val electric1= SecurityData.decryptData(readedData?.electric1.toString())
+                    val electric2= SecurityData.decryptData(readedData?.electric2.toString())
+                    val electric3= SecurityData.decryptData(readedData?.electric3.toString())
+                    txtLamp1.text=lamp1
+                    txtLamp2.text=lamp2
+                    txtLamp3.text=lamp3
+                    txtElectric1.text=electric1
+                    txtElectric2.text=electric2
+                    txtElectric3.text=electric3
 
-                    txtLamp2.text = readedData?.lamp2.toString()
 
-                    txtLamp3.text = readedData?.lamp3.toString()
-
-                    txtElectric1.text = readedData?.electric1.toString()
-
-                    txtElectric2.text = readedData?.electric2.toString()
-
-                    txtElectric3.text = readedData?.electric3.toString()
-
-                    controlValue.add(readedData?.lamp1.toString())
-                    controlValue.add(readedData?.lamp2.toString())
-                    controlValue.add(readedData?.lamp3.toString())
-                    controlValue.add(readedData?.electric1.toString())
-                    controlValue.add(readedData?.electric2.toString())
-                    controlValue.add(readedData?.electric3.toString())
+                    controlValue.add(lamp1)
+                    controlValue.add(lamp2)
+                    controlValue.add(lamp3)
+                    controlValue.add(electric1)
+                    controlValue.add(electric2)
+                    controlValue.add(electric3)
 
                     controlLayoutBackground(controlValue)
-                    val database = FirebaseDatabase.getInstance().reference
-                    database.child("pi").child("controls").setValue(
-                        Controls(
-                            controlValue[3],
-                            controlValue[4],
-                            controlValue[5],
-                            controlValue[0],
-                            controlValue[1],
-                            controlValue[2]
-                        )
-                    )
+//                    val database = FirebaseDatabase.getInstance().reference
+//                    database.child("mobile").child("controls").setValue(
+//                        Controls(
+//                            controlValue[3],
+//                            controlValue[4],
+//                            controlValue[5],
+//                            controlValue[0],
+//                            controlValue[1],
+//                            controlValue[2]
+//                        )
+//                    )
 
                 }
             }
@@ -148,14 +155,16 @@ class RoomControlActivity : AppCompatActivity() {
         llLamp1.setOnClickListener {
             if (controlValue[0] == "On") {
                 controlValue[0] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp1.text = "Off"
@@ -164,15 +173,17 @@ class RoomControlActivity : AppCompatActivity() {
                     R.drawable.curved_background
                 )
             } else {
-                controlValue[0] = "On"
+                controlValue[0] ="On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp1.text = "On"
@@ -186,14 +197,16 @@ class RoomControlActivity : AppCompatActivity() {
         llLamp2.setOnClickListener {
             if (controlValue[1] == "On") {
                 controlValue[1] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp2.text = "Off"
@@ -203,14 +216,16 @@ class RoomControlActivity : AppCompatActivity() {
                 )
             } else {
                 controlValue[1] = "On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp2.text = "On"
@@ -224,14 +239,16 @@ class RoomControlActivity : AppCompatActivity() {
         llLamp3.setOnClickListener {
             if (controlValue[2] == "On") {
                 controlValue[2] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp3.text = "Off"
@@ -241,14 +258,16 @@ class RoomControlActivity : AppCompatActivity() {
                 )
             } else {
                 controlValue[2] = "On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtLamp3.text = "On"
@@ -263,14 +282,16 @@ class RoomControlActivity : AppCompatActivity() {
         llElectric1.setOnClickListener {
             if (controlValue[3] == "On") {
                 controlValue[3] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric1.text = "Off"
@@ -281,14 +302,16 @@ class RoomControlActivity : AppCompatActivity() {
                     )
             } else {
                 controlValue[3] = "On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric1.text = "On"
@@ -302,14 +325,16 @@ class RoomControlActivity : AppCompatActivity() {
         llElectric2.setOnClickListener {
             if (controlValue[4] == "On") {
                 controlValue[4] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric2.text = "Off"
@@ -320,14 +345,16 @@ class RoomControlActivity : AppCompatActivity() {
                     )
             } else {
                 controlValue[4] = "On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric2.text = "On"
@@ -341,14 +368,16 @@ class RoomControlActivity : AppCompatActivity() {
         llElectric3.setOnClickListener {
             if (controlValue[5] == "On") {
                 controlValue[5] = "Off"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric3.text = "Off"
@@ -359,14 +388,16 @@ class RoomControlActivity : AppCompatActivity() {
                     )
             } else {
                 controlValue[5] = "On"
+                controlValueEnc=SecurityData.encControl(controlValue)
                 database.child("mobile").child("controls").setValue(
                     Controls(
-                        controlValue[3],
-                        controlValue[4],
-                        controlValue[5],
-                        controlValue[0],
-                        controlValue[1],
-                        controlValue[2]
+                        controlValueEnc[3],
+                        controlValueEnc[4],
+                        controlValueEnc[5],
+                        controlValueEnc[0],
+                        controlValueEnc[1],
+                        controlValueEnc[2]
+
                     )
                 )
                 txtElectric3.text = "On"
